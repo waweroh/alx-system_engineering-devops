@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Displays the time for 12 hours and 59 minutes.
+filename="/etc/passwd"
+while IFS=: read -r a _ c _ _ f _; do
+   printf '%s:%s:%s\n' "$a" "$c" "$f"
+   done < $filename
