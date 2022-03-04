@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Configures a server with these:
+#     localhost resolves to 127.0.0.2
+#     facebook.com resolves to 8.8.8.8
+filename=~/"hosts.new"
+cp /etc/hosts $filename
+isInFile=$(cat $filename | grep -c ' localhost')
+if [ "$isInFile" -gt 0 ]; then
+  ipnum=$(cat $filename | grep ' localhost' | sed -E  's/(.*) {1}(.*)/\1/')
+    sed -i 's/'"$ipnum"'/127.0.0.2/' "$filename"
+    else
+      echo "127.0.0.2 localhost" >> $filename
+      fi
+      echo "8.8.8.8 facebook.com" >> $filename
+      cat $filename | sudo tee /etc/hosts > /dev/null
