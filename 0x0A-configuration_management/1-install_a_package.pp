@@ -1,4 +1,5 @@
-# Installs a package
-package { 'puppet-lint':
-  ensure   => '2.5.0',
-  provider => 'gem'
+# Flask install
+exec { 'install':
+  command  => 'pip3 install flask',
+  path     => '/bin:/sbin:/usr/bin:/usr/sbin'
+}
