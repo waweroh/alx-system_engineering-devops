@@ -1,1 +1,1 @@
-The repo contains shell basics
+The repo contains shell basics.
