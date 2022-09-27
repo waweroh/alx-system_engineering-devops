@@ -3,6 +3,8 @@
 
 apt-get update
 apt-get -y install nginx
+chown -R "$USER":"$USER" /var/www/example.com/html
+chmod -R 755 /var/www
 touch /var/www/html/index.html
 echo "Hello World!" > /var/www/html/index.html
 touch /var/www/html/404.html
