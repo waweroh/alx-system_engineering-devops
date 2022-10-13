@@ -3,6 +3,11 @@
 
 sudo apt-get update
 sudo apt-get -y install nginx
-# Listen on port 80 and set redirection
+# Listen on port 80
+sudo ufw allow 'Nginx HTTP'
+# create string Hello World and start nginx
+touch /var/www/html/index.html
+echo "Hello World!" | sudo tee /var/www/html/index.html
+# redirection
 sed -i "/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
 sudo service nginx start
