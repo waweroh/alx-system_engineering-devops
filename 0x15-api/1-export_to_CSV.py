@@ -1,16 +1,34 @@
 #!/usr/bin/python3
-"""Returns to-do list information for a given employee ID."""
+"""Request user todos from API"""
+
+import csv
 import requests
-import sys
+from sys import argv
 
 if __name__ == "__main__":
-    url = "https://jsonplaceholder.typicode.com/"
-    user = requests.get(url + "users/{}".format(sys.argv[1])).json()
-    task = requests.get(url + "todos", params={"userId": sys.argv[1]}).json()
 
-    for work in task.json():
-        f = open(str(user.json().get("id")) + ".csv", "a")
-        f.write("\"{}\",\"{}\",\"{}\",\"{}\"\n".format(
-                user.json().get("id"), user.json().get("username"),
-                work.get("completed"), work.get("title")))
-        f.close()
+    def m_request(resource, argss=None):
+        """Retrieve user information from API"""
+        url = 'https://jsonplaceholder.typicode.com/'
+        url += resource
+        if argss:
+            url += ('?' + argss[0] + '=' + argss[1])
+
+        result = requests.get(url)
+        result = result.json()
+        return result
+
+    user = m_request('users', ('id', argv[1]))[0]
+    tasks = m_request('todos', ('userId', argv[1]))
+
+    csv_filename = argv[1] + '.csv'
+    with open(csv_filename, mode='w') as f:
+        writer = csv.writer(f,
+                            delimiter=',',
+                            quotechar='"',
+                            quoting=csv.QUOTE_ALL)
+        for task in tasks:
+            writer.writerow([user['id'],
+                            user['username'],
+                            task['completed'],
+                            task['title']])
